@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class MigrasiResource extends JsonResource
+class MutasiResource extends JsonResource
 {
     //define properti
     public $status;
@@ -36,7 +36,7 @@ class MigrasiResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'success'   => $this->status,
+            'status'   => $this->status,
             'message'   => $this->message,
             'data'      => $this->resource
         ];
