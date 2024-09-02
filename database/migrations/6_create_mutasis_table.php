@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('migrasis', function (Blueprint $table) {
+        Schema::create('mutasis', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id'); // Menambahkan kolom untuk foreign key ke tabel users
             $table->string('barang_kode'); // Menambahkan kolom untuk foreign key ke tabel barangs
@@ -32,7 +32,7 @@ return new class extends Migration
      */
     public function down(): void
 {
-    Schema::table('migrasis', function (Blueprint $table) {
+    Schema::table('mutasis', function (Blueprint $table) {
         // Drop the foreign key constraints
         $table->dropForeign(['user_id']);
         $table->dropForeign(['barang_kode']);
@@ -40,6 +40,6 @@ return new class extends Migration
     });
 
     // Drop the 'migrasis' table
-    Schema::dropIfExists('migrasis');
+    Schema::dropIfExists('mutasis');
 }
 };
