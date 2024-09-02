@@ -95,7 +95,7 @@ class MutasiController extends Controller
             );
         }
 
-        $mutasi = Mutasu::find($id);
+        $mutasi = Mutasi::find($id);
         if ($mutasi) {
             $mutasi->update([
                 'user_id' => $request->user_id,
@@ -124,11 +124,11 @@ class MutasiController extends Controller
         if ($mutasi) {
             // Jika pengguna ditemukan, hapus dan kembalikan respons sukses
             $mutasi->delete();
-            return new BarangResource("success", 'Data Mutasi Berhasil Dihapus!', null);
+            return new MutasiResource("success", 'Data Mutasi Berhasil Dihapus!', null);
         } else {
             // Jika pengguna tidak ditemukan, kembalikan respons error
             return response()->json(
-                new BarangResource("error", 'Data Mutasi Tidak Ditemukan!', null),
+                new MutasiResource("error", 'Data Mutasi Tidak Ditemukan!', null),
                 404
             );
         }
@@ -140,8 +140,8 @@ class MutasiController extends Controller
                     ->join('users', 'mutasis.user_id', '=', 'users.id')
                     ->join('barangs', 'mutasis.barang_kode', '=', 'barangs.kode')
                     ->join('jenis_mutasis', 'mutasis.jenis_mutasi_id', '=', 'jenis_mutasis.id')
-                    ->where('user.id', $id)
-                    ->first();
+                    ->where('users.id', $id)
+                    ->get();
 
         if ($mutasi) {
             return new MutasiResource("success", 'Detail Data Mutasi!', $mutasi);
@@ -160,7 +160,7 @@ class MutasiController extends Controller
                     ->join('barangs', 'mutasis.barang_kode', '=', 'barangs.kode')
                     ->join('jenis_mutasis', 'mutasis.jenis_mutasi_id', '=', 'jenis_mutasis.id')
                     ->where('barangs.kode', $id)
-                    ->first();
+                    ->get();
 
         if ($mutasi) {
             return new MutasiResource("success", 'Detail Data Mutasi!', $mutasi);
