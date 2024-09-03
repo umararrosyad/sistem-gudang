@@ -1,43 +1,45 @@
-# Use the official PHP image as the base image
-FROM php:8.2-fpm
+# Gunakan image resmi PHP 8.2 dengan Apache
+FROM php:8.2-apache
 
-# Set working directory
-WORKDIR /var/www
+# Atur direktori kerja dalam container
+WORKDIR /var/www/html
 
-# Install system dependencies
+# Install extensions yang dibutuhkan Laravel
 RUN apt-get update && apt-get install -y \
-    build-essential \
     libpng-dev \
-    libjpeg62-turbo-dev \
+    libjpeg-dev \
     libfreetype6-dev \
-    locales \
-    zip \
-    jpegoptim optipng pngquant gifsicle \
-    vim \
-    unzip \
-    git \
-    curl \
     libonig-dev \
-    libxml2-dev \
     libzip-dev \
+    zip \
+    unzip \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip
 
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
 # Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Copy existing application directory contents
-COPY . /var/www
+# Copy semua file dari project ke direktori kerja
+COPY . .
 
-# Copy existing application directory permissions
-COPY --chown=www-data:www-data . /var/www
+# Copy file konfigurasi Apache untuk Laravel
+COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
 
-# Change current user to www
-USER www-data
+# Atur permission pada direktori Laravel
+RUN chown -R www-data:www-data /var/www/html \
+    && a2enmod rewrite
 
-# Expose port 9000 and start php-fpm server
-EXPOSE 9000
-CMD ["php-fpm"]
+# Jalankan Composer install untuk menginstall dependencies
+RUN composer install --no-dev --optimize-autoloader
+
+# Copy file environment
+COPY .env.example .env
+
+# Generate application key
+RUN php artisan key:generate
+
+# Expose port 80
+EXPOSE 80
+
+# Jalankan Apache di foreground
+CMD ["apache2-foreground"]
