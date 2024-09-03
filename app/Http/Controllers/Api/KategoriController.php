@@ -48,7 +48,14 @@ class KategoriController extends Controller
     public function show($id)
     {
         $kategori = Kategori::find($id);
-        return new KategoriResource("success", 'Detail Data kategori!', $kategori);
+        if ($kategori) {
+            return new KategoriResource("success", 'Detail Data kategori!', $kategori);
+        } else {
+            return response()->json(
+                new KategoriResource("error", 'Data kategori Tidak Ditemukan!', null),
+                404
+            );
+        }
     }
 
     public function update(Request $request, $id)

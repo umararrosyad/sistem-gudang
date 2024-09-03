@@ -52,15 +52,23 @@ class UserController extends Controller
     public function show($id)
     {
         $User = User::find($id);
-        return new UserResource("success", 'Detail Data User!', $User);
+
+        if ($User) {
+            return new UserResource("success", 'Detail Data User!', $User);
+        } else {
+            return response()->json(
+                new UserResource("error", 'Data User Tidak Ditemukan!', null),
+                404
+            );
+        }
     }
 
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'nama' => 'required',
-            'email' => 'required',
-            'password' => 'required',
+            'nama' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6',
         ]);
 
         if ($validator->fails()) {

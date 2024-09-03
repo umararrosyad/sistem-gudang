@@ -144,10 +144,10 @@ class MutasiController extends Controller
                     ->get();
 
         if ($mutasi) {
-            return new MutasiResource("success", 'Detail Data Mutasi!', $mutasi);
+            return new MutasiResource("success", 'History Mutasi User', $mutasi);
         } else {
             return response()->json(
-                new MutasiResource("error", 'Data Mutasi Tidak Ditemukan!', null),
+                new MutasiResource("error", 'Data History Tidak Ditemukan!', null),
                 404
             );
         }
@@ -163,10 +163,10 @@ class MutasiController extends Controller
                     ->get();
 
         if ($mutasi) {
-            return new MutasiResource("success", 'Detail Data Mutasi!', $mutasi);
+            return new MutasiResource("success", 'Data History Mutasi Barang!', $mutasi);
         } else {
             return response()->json(
-                new MutasiResource("error", 'Data Mutasi Tidak Ditemukan!', null),
+                new MutasiResource("error", 'Data History Tidak Ditemukan!', null),
                 404
             );
         }

@@ -37,7 +37,11 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return response()->json(['message' => 'User created successfully'], 201);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User created successfully',
+            'data' => $user
+        ], 201);
     }
 
     public function login(Request $request)
@@ -45,7 +49,11 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (!$token = JWTAuth::attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized',
+                'data' => null
+            ], 401);
         }
 
         return $this->respondWithToken($token);
@@ -53,22 +61,33 @@ class AuthController extends Controller
 
     public function logout()
     {
-        Auth::logout();
+        Auth::logout(); // Log out the user
 
-        return response()->json(['message' => 'Successfully logged out']);
+        // Blacklist the token
+        JWTAuth::invalidate(JWTAuth::getToken());
+
+        return response()->json(['status' => 'success', 'message' => 'Successfully logged out', 'data' => null]);
     }
 
     public function me()
     {
-        return response()->json(Auth::user());
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User profile retrieved successfully',
+            'data' => Auth::user(),
+        ]);
     }
 
     protected function respondWithToken($token)
     {
         return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'status' => 'success',
+            'message' => 'Token generated successfully',
+            'data' => [
+                'access_token' => $token,
+                'token_type' => 'bearer',
+                'expires_in' => auth()->factory()->getTTL() . ' minutes' // Menambahkan satuan "minutes"
+            ]
         ]);
     }
 }

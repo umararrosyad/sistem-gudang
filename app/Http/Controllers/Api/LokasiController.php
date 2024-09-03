@@ -51,7 +51,15 @@ class LokasiController extends Controller
     public function show($id)
     {
         $lokasi = Lokasi::find($id);
-        return new LokasiResource("success", 'Detail Data lokasi!', $lokasi);
+
+        if ($lokasi) {
+            return new LokasiResource("success", 'Detail Data lokasi!', $lokasi);
+        } else {
+            return response()->json(
+                new LokasiResource("error", 'Data lokasi Tidak Ditemukan!', null),
+                404
+            );
+        }
     }
 
     public function update(Request $request, $id)

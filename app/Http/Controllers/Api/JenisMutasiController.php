@@ -48,7 +48,14 @@ class JenisMutasiController extends Controller
     public function show($id)
     {
         $JenisMutasi = JenisMutasi::find($id);
-        return new JenisMutasiResource("success", 'Detail Data JenisMutasi!', $JenisMutasi);
+        if ($JenisMutasi) {
+            return new JenisMutasiResource("success", 'Detail Data Jenis Mutasi!', $JenisMutasi);
+        } else {
+            return response()->json(
+                new JenisMutasiResource("error", 'Data Jenis Mutasi Tidak Ditemukan!', null),
+                404
+            );
+        }
     }
 
     public function update(Request $request, $id)
