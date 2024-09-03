@@ -7,6 +7,7 @@
 - `cd sistem-gudang`
 - `composer install`
 - `cp .env.example .env`
+- sesuaikan bagian database degan konfigurasi masing masing
 - `php artisan key:generate`
 - Buat database dengan nama `sistem_gudang`
 - `php artisan migrate`
@@ -23,3 +24,9 @@
 
 ### Documentation API Postman
 - [Link to Dokumentasi](https://documenter.getpostman.com/view/21072796/2sAXjM5scX#intro)
+
+### ERD Database 
+- [Link to ERD Database](https://dbdiagram.io/d/66d43853eef7e08f0e5754c3)
+
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://drive.google.com/file/d/1WdreRMw5vJoL4_j5if6OzLjaDau_51YU/view?usp=sharing" width="400" alt="Laravel Logo"></a></p>
+
