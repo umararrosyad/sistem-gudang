@@ -15,33 +15,33 @@
 
 ### Langkah Pertama (Hanya untuk pertama kali):
 
-1. Clone repository:  
+1 Clone repository:  
    `git clone https://github.com/umararrosyad/sistem-gudang`
    
-2. Masuk ke direktori proyek:  
+2 Masuk ke direktori proyek:  
    `cd sistem-gudang`
 
-3. Install dependencies:  
+3 Install dependencies:  
    `composer install`
 
-4. Salin file `.env` contoh:  
+4 Salin file `.env` contoh:  
    `cp .env.example .env`
 
-5. Konfigurasi database:  
-   - Sesuaikan pengaturan database di dalam file `.env` sesuai dengan konfigurasi yang Anda gunakan.
+5 Konfigurasi database:  
+   Sesuaikan pengaturan database di dalam file `.env` sesuai dengan konfigurasi yang Anda gunakan.
 
-6. Generate application key:  
+6 Generate application key:  
    `php artisan key:generate`
 
-7. Buat database dengan nama `sistem_gudang`.
+7 Buat database dengan nama `sistem_gudang`.
 
-8. Jalankan migrasi untuk membuat tabel-tabel yang diperlukan:  
+8 Jalankan migrasi untuk membuat tabel-tabel yang diperlukan:  
    `php artisan migrate`
 
-9. Seed database dengan data awal:  
+9 Seed database dengan data awal:  
    `php artisan db:seed`
 
-10. Jalankan aplikasi:  
+10 Jalankan aplikasi:  
     `php artisan serve`
 
 ### Catatan Penting
